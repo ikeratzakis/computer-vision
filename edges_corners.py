@@ -61,7 +61,7 @@ for _, cur_angle, distances in zip(*hough_line_peaks(hough_space, angles, distan
 angles = [a * 180 / np.pi for a in angle]
 print('Angles detected', angles)
 
-# Billard image, estimate angle of the cue with respect to the horizontal axis. Apply Canny edge detector and proceed
+# Billiard image, estimate angle of the cue with respect to the horizontal axis. Apply Canny edge detector and proceed
 # from there with Hough transform.
 image = cv.imread('images_2nd_set/image31.png', 0)
 kernel_size = 5
@@ -73,7 +73,7 @@ edges = cv.Canny(image, low_threshold, high_threshold)
 rho = 1  # Pixel distance in grid
 theta = np.pi / 180  # Angle in radians
 threshold = 15
-min_line_length = 200  # Minimum number of pixels that constitute a line. To isolate the billard cue,
+min_line_length = 200  # Minimum number of pixels that constitute a line. To isolate the billiard cue,
 # use a relatively high number.
 max_line_gap = 10  # Maximum gap in pixels between connectable line segments
 line_image = np.copy(image) * 0  # Create an empty image to draw the detected lines on
@@ -85,12 +85,12 @@ for line in lines:
 print('Points of detected lines in the form of ((x1,y1), (x2,y2)):', lines)
 lines_edges = cv.addWeighted(image, 1, line_image, 1, 0)
 
-# Plot results (also display an image with the isolated billard cue)
+# Plot results (also display an image with the isolated billiard cue)
 fig, axes = plt.subplots(1, 4)
 axes[0].imshow(image, cmap='gray'), axes[0].set_title('Original image')
 axes[1].imshow(lines_edges, cmap='gray'), axes[1].set_title('Detected lines (Hough transform)')
 axes[3].imshow(ndimage.rotate((lines_edges - image), -51), cmap='gray'), axes[3].set_title('Rotated image')
-# Estimate angle between the horizontal axis and the billard cue.
+# Estimate angle between the horizontal axis and the billiard cue.
 horizontal_axis = (
     (0, int(image.shape[1] / 2) + 30), (image.shape[0], int(image.shape[1] / 2) + 30))  # Two points with same y
 angle_1 = atan2(lines[0][0][1] - lines[0][0][3], lines[0][0][0] - lines[0][0][2])
